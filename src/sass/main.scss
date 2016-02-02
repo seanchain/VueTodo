@@ -1,0 +1,20 @@
+$fontStack:    Helvetica, sans-serif;
+$primaryColor: #333;
+$margin-left: 5%;
+$margin-top: 20px;
+$component-margin: 10px;
+$component-margin-small: 5px;
+
+body {
+  margin-top: $margin-top;
+  margin-left:$margin-left;
+  font-family: $fontStack;
+  color: $primaryColor;
+}
+
+
+div#todo {
+  input {
+    margin-bottom: $component-margin;
+  }
+}

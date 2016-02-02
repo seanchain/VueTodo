@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Todo List Application</title>
+      <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+      <link href="https://cdn.bootcss.com/bootstrap-material-design/0.5.7/css/bootstrap-material-design.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/main.css">
+  </head>
+  <body>
+    <div class="row">
+      <div id="todo" class="col-xs-4 col-xs-offset-4">
+        <input v-model="newTodo" v-on:keyup.enter="addTodo">
+        <ul>
+          <li v-for="todo in todos">
+            <span>{{todo.text}}</span>
+            <button class="btn btn-primary btn-xs" v-on:click="removeTodo($index)">x</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/1.0.15/vue.min.js" ></script>
+    <script src="/js/app.js" charset="utf-8"></script>
+  </body>
+</html>
