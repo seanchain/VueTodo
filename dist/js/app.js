@@ -4,10 +4,10 @@
   saveFunc = function(elem) {
     var poststuff, request;
     poststuff = {
-      url: 'http://localhost:3000/save',
+      url: '/save',
       type: 'POST',
       data: {
-        content: 'elem'
+        content: elem
       }
     };
     request = $.ajax(poststuff);

@@ -1,7 +1,8 @@
 var express = require('express')
-var mongoose = require('mongoose');
+var mongoose = require('mongoose')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
+var db = require('./dist/js/db.js')
 var app = express()
 
 app.use(express.static(__dirname + '/dist'))
@@ -14,8 +15,9 @@ app.get('/todo', function (req, res) {
 
 app.post('/save', function (req, res) {
   var content = req.body.content
-  console.log(content)
-  res.send('okay')
+  var saveRes = db.insertARecord('csh', content)
+  console.log('The value from the database is ' + saveRes)
+  res.send('nice')
 })
 
 app.listen(3000, function () {
