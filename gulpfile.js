@@ -8,7 +8,7 @@ var minify = require('gulp-minify-css')
 gulp.task('default', ['css'], function () {
   return gulp.src('src/coffee/*.coffee')
   .pipe(coffee())
-  // .pipe(uglify())
+  .pipe(uglify())
   .pipe(gulp.dest('dist/js/'))
 })
 
