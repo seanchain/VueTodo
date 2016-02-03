@@ -1,10 +1,10 @@
 (function() {
-  var loadTodos, saveFunc, todo, todo_content;
+  var todo, todo_content, updateTodos;
 
-  saveFunc = function(elem) {
+  updateTodos = function(elem) {
     var poststuff, request;
     poststuff = {
-      url: '/save',
+      url: '/modify',
       type: 'POST',
       data: {
         content: elem
@@ -19,24 +19,26 @@
     });
   };
 
-  loadTodos = function() {
-    var todos;
-    return todos = [
-      {
-        text: 'First todo'
-      }, {
-        text: 'Second todo'
-      }
-    ];
-  };
-
   todo_content = {
     el: '#todo',
     data: {
       newTodo: '',
-      todos: loadTodos()
+      todos: []
+    },
+    created: function() {
+      return this.fetchData();
     },
     methods: {
+      fetchData: function() {
+        var self, xhr;
+        xhr = new XMLHttpRequest();
+        self = this;
+        xhr.open('GET', '/getTodos');
+        xhr.onload = function() {
+          return self.todos = JSON.parse(xhr.responseText);
+        };
+        return xhr.send();
+      },
       addTodo: function() {
         var text;
         text = this.newTodo.trim();
@@ -46,11 +48,11 @@
         if (text) {
           this.newTodo = '';
         }
-        return saveFunc(text);
+        return updateTodos(this.todos);
       },
       removeTodo: function(index) {
         this.todos.splice(index, 1);
-        return saveFunc(text);
+        return updateTodos(this.todos);
       }
     }
   };

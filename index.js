@@ -13,11 +13,18 @@ app.get('/todo', function (req, res) {
   res.sendFile(__dirname + '/todo/index.html')
 })
 
-app.post('/save', function (req, res) {
+app.get('/getTodos', function (req, res) {
+  var userTodos = db.getUserTodos('csh', function (queryRes) {
+    res.send(queryRes)
+  })
+})
+
+app.post('/modify', function (req, res) {
   var content = req.body.content
-  var saveRes = db.insertARecord('csh', content)
-  console.log('The value from the database is ' + saveRes)
-  res.send('nice')
+  var saveRes = db.insertARecord('csh', content, function (saveRes) {
+    console.log('The value from the database is ' + saveRes)
+    res.send('nice')
+  })
 })
 
 app.listen(3000, function () {

@@ -1,6 +1,6 @@
-saveFunc = (elem) ->
+updateTodos = (elem) ->
   poststuff =
-    url: '/save'
+    url: '/modify'
     type: 'POST'
     data:
       content: elem
@@ -10,21 +10,27 @@ saveFunc = (elem) ->
   request.fail (jqXHR, textStatus) ->
     console.log textStatus
 
-loadTodos = ->
-  todos = [{text: 'First todo'}, {text: 'Second todo'}]
-
 todo_content =
   el: '#todo'
   data:
-    newTodo: '',
-    todos: loadTodos()
+    newTodo: ''
+    todos: []
+  created: ->
+    this.fetchData()
   methods:
+    fetchData: ->
+      xhr = new XMLHttpRequest()
+      self = this
+      xhr.open 'GET', '/getTodos'
+      xhr.onload = ->
+        self.todos = JSON.parse xhr.responseText
+      xhr.send()
     addTodo: ->
       text = this.newTodo.trim()
       this.todos.push {text: text}; this.newTodo = '' if text
-      saveFunc text
-
+      updateTodos this.todos
     removeTodo: (index) ->
       this.todos.splice(index, 1)
-      saveFunc text
+      updateTodos this.todos
+
 todo = new Vue todo_content

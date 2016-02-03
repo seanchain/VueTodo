@@ -22,8 +22,11 @@
 
   Todo = mongoose.model('Todo', schema);
 
-  exports.insertARecord = function(userid, todo) {
+  exports.insertARecord = function(userid, todo, fn) {
     var todoContent;
+    Todo.find({
+      id: userid
+    }).remove().exec();
     todoContent = {
       id: userid,
       todo: todo
@@ -31,7 +34,23 @@
     todo = new Todo(todoContent);
     return todo.save(function(err) {
       if (err) {
-        return "something wrong here " + err;
+        fn("something wrong here " + err);
+      }
+      if (!err) {
+        return fn("everything is fine");
+      }
+    });
+  };
+
+  exports.getUserTodos = function(userid, fn) {
+    return Todo.find({
+      id: userid
+    }, function(err, obj) {
+      if (!err) {
+        fn(obj[0]["todo"]);
+      }
+      if (err) {
+        return fn("error getting data");
       }
     });
   };

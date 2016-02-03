@@ -14,10 +14,17 @@ todoDataType =
 schema = new mongoose.Schema todoDataType
 Todo = mongoose.model 'Todo', schema
 
-exports.insertARecord = (userid, todo) ->
+exports.insertARecord = (userid, todo, fn) ->
+  Todo.find({id: userid}).remove().exec()
   todoContent =
     id: userid
     todo: todo
   todo = new Todo todoContent
   todo.save (err) ->
-    "something wrong here #{err}" if err
+    fn "something wrong here #{err}" if err
+    fn "everything is fine" if !err
+
+exports.getUserTodos = (userid, fn) ->
+  Todo.find {id: userid}, (err, obj) ->
+    fn obj[0]["todo"] if !err
+    fn "error getting data" if err
