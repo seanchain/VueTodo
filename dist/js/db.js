@@ -3,6 +3,14 @@
 
   mongoose = require('mongoose');
 
+  mongoose.connection.on('open', function(ref) {
+    return console.log("Connected to the db");
+  });
+
+  mongoose.connection.on('error', function(err) {
+    return console.log("Connected error: " + err);
+  });
+
   mongoose.connect('mongodb://localhost/users');
 
   todoDataType = {
@@ -14,31 +22,18 @@
 
   Todo = mongoose.model('Todo', schema);
 
-  exports.checkDBConnection = function() {
-    var dbsuc;
-    dbsuc = mongoose.connection;
-    dbsuc.on('error', function(fn) {
-      return fn("wrong connecting");
-    });
-    return "correct";
-  };
-
   exports.insertARecord = function(userid, todo) {
     var todoContent;
-    this.checkDBConnection(function(ret) {
-      return console.log(ret + " from the database checking function");
-    });
     todoContent = {
       id: userid,
       todo: todo
     };
     todo = new Todo(todoContent);
-    todo.save(function(err) {
+    return todo.save(function(err) {
       if (err) {
-        return console.log("something wrong here " + err);
+        return "something wrong here " + err;
       }
     });
-    return "okay";
   };
 
 }).call(this);
