@@ -6,15 +6,15 @@ var sass = require('gulp-sass')
 var minify = require('gulp-minify-css')
 
 gulp.task('default', ['css'], function () {
-  return gulp.src('src/coffee/*.coffee')
+  return gulp.src('public/js/src/*.coffee')
   .pipe(coffee())
   .pipe(uglify())
-  .pipe(gulp.dest('dist/js/'))
+  .pipe(gulp.dest('public/js/build/'))
 })
 
 gulp.task('css', function () {
-  return gulp.src('src/sass/*.scss')
+  return gulp.src('public/css/src/*.scss')
   .pipe(sass())
   .pipe(minify())
-  .pipe(gulp.dest('dist/css/'))
+  .pipe(gulp.dest('public/css/build/'))
 })
