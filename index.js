@@ -2,10 +2,10 @@ var express = require('express')
 var mongoose = require('mongoose')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
-var db = require('./dist/js/db.js')
+var db = require('./public/js/build/db.js')
 var app = express()
 
-app.use(express.static(__dirname + '/dist'))
+app.use(express.static(__dirname + '/public'))
 app.use(cookieParser())
 app.use(bodyParser())
 
